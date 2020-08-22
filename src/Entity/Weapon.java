@@ -10,8 +10,8 @@ public class Weapon {
     private List<Caliber> caliber;
     private List<Attachment> attachment;
 
-    public Weapon(int weaponId, String gun) {
-        this.gunId = weaponId;
+    public Weapon(int gunId, String gun) {
+        this.gunId = gunId;
         this.gun = gun;
         this.setType(type);
         this.setCaliber(caliber);
