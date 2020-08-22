@@ -11,12 +11,12 @@ import java.util.List;
 
 public class AttachmentDAO {
 
-    private Connection connection;
+    private static Connection connection;
     private final String GET_ATTACHMENT_QUERY = "SELECT * FROM attachment";
     private final String GET_ATTACHMENT_BY_ID_QUERY = "SELECT * FROM attachment WHERE attachmentId = ?";
     private final String GET_ATTACHMENT_BY_GUN_ID_QUERY = "Select * FROM attachment WHERE gunId = ?";
-    private final String UPDATE_ATTACHMENT_BY_ID_QUERY = "UPDATE type SET attachmentId = ?, attachmentType = ?";
-    private final String ADD_NEW_ATTACHMENT_QUERY = "INSERT INTO attachment(attachmentId, attachmentType) VALUES (?,?)";
+    private final static String UPDATE_ATTACHMENT_BY_ID_QUERY = "UPDATE type SET attachmentId = ?, attachmentType = ?";
+    private final static String ADD_NEW_ATTACHMENT_QUERY = "INSERT INTO attachment(attachmentId, attachmentType) VALUES (?,?)";
     private final String DELETE_ATTACHMENT_BY_ATTACHMENT_ID_QUERY = "DELETE FROM attachment WHERE attachmentId = ?";
 
     public AttachmentDAO() {
@@ -57,7 +57,7 @@ public class AttachmentDAO {
         return attachment;
     }
 
-    public void updateType(int attachmentId, String attachmentType) throws SQLException {
+    public static void updateAttachment(int attachmentId, String attachmentType) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(UPDATE_ATTACHMENT_BY_ID_QUERY);
         ps.setInt(1, attachmentId);
         ps.setString(2,attachmentType);
@@ -68,7 +68,7 @@ public class AttachmentDAO {
         return new Attachment(attachmentId, attachmentType);
     }
 
-    public void addNewCaliber(int attachmentId, String attachmentType) throws SQLException {
+    public static void addNewAttachment(int attachmentId, String attachmentType) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(ADD_NEW_ATTACHMENT_QUERY);
         ps.setInt(1, attachmentId);
         ps.setString(2,attachmentType);

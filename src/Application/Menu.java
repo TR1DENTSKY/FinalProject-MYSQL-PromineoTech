@@ -4,7 +4,6 @@ import DAO.AttachmentDAO;
 import DAO.CaliberDAO;
 import DAO.TypeDAO;
 import DAO.WeaponDAO;
-import Entity.Type;
 
 
 import java.sql.SQLException;
@@ -100,17 +99,5 @@ public class Menu {
             System.out.println(i + 1 + ")" + options.get(i));
         }
     }
-
-    private void displayType() throws SQLException {
-        List<Type> listType = typeDAO.Types();
-        System.out.println("\nWeapon Type:");
-        for (Type type : listType) {
-            System.out.println("ID: " + type.getTypeId() + ") Type: " + type.getWeaponType());
-        }
-
-        System.out.println();
-    }
-
-
 
 }

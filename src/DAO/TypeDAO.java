@@ -11,13 +11,13 @@ import java.util.List;
 
 public class TypeDAO {
 
-    private Connection connection;
+    private static Connection connection;
     private final String GET_TYPE_BY_GUN_ID_QUERY = "SELECT * FROM type WHERE gunId = ?";
     private final String GET_TYPE_QUERY = "SELECT * FROM type";
     private final String GET_TYPE_BY_TYPE_ID_QUERY = "SELECT * FROM type WHERE type_id = ?";
-    private final String CREATE_NEW_TYPE_QUERY = "INSERT INTO type(weapon_type, type_id) VALUES(?,?)";
-    private final String UPDATE_TYPE_BY_ID_QUERY = "UPDATE type SET type_id = ?, weapon_type = ?";
-    private final String DELETE_TYPE_BY_ID_QUERY = "DELETE FROM type WHERE type_id = ?";
+    private final static String CREATE_NEW_TYPE_QUERY = "INSERT INTO type(weapon_type, type_id) VALUES(?,?)";
+    private final static String UPDATE_TYPE_BY_ID_QUERY = "UPDATE type SET type_id = ?, weapon_type = ?";
+    private final static String DELETE_TYPE_BY_ID_QUERY = "DELETE FROM type WHERE type_id = ?";
 
     public TypeDAO () {
         connection = DBConnection.getConnection();
@@ -46,7 +46,7 @@ public class TypeDAO {
         return types;
     }
 
-    public void createNewType(int typeId, String weapon_type) throws SQLException {
+    public static void createNewType(int typeId, String weapon_type) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(CREATE_NEW_TYPE_QUERY);
         ps.setInt(1, typeId);
         ps.setString(2, weapon_type);
@@ -61,14 +61,14 @@ public class TypeDAO {
         return populateMember(rs.getInt(1), rs.getString(2));
     }
 
-    public void updateType(int typeId, String weaponType) throws SQLException {
+    public static void updateType(int typeId, String weaponType) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(UPDATE_TYPE_BY_ID_QUERY);
         ps.setInt(1, typeId);
         ps.setString(2,weaponType);
         ps.executeUpdate();
     }
 
-    public void deleteTypeById(int typeId) throws SQLException {
+    public static void deleteTypeById(int typeId) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(DELETE_TYPE_BY_ID_QUERY);
         ps.setInt(1, typeId);
         ps.executeUpdate();
