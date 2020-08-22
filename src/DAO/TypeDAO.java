@@ -14,7 +14,7 @@ public class TypeDAO {
     private static Connection connection;
     private final String GET_TYPE_BY_GUN_ID_QUERY = "SELECT * FROM type WHERE gunId = ?";
     private final String GET_TYPE_QUERY = "SELECT * FROM type";
-    private final String GET_TYPE_BY_TYPE_ID_QUERY = "SELECT * FROM type WHERE type_id = ?";
+    private static final String GET_TYPE_BY_TYPE_ID_QUERY = "SELECT * FROM type WHERE type_id = ?";
     private final static String CREATE_NEW_TYPE_QUERY = "INSERT INTO type(weapon_type, type_id) VALUES(?,?)";
     private final static String UPDATE_TYPE_BY_ID_QUERY = "UPDATE type SET type_id = ?, weapon_type = ?";
     private final static String DELETE_TYPE_BY_ID_QUERY = "DELETE FROM type WHERE type_id = ?";
@@ -36,14 +36,14 @@ public class TypeDAO {
         return type;
     }
 
-    public List<Type> Types() throws SQLException {
+    public List<Type> getAllType() throws SQLException {
         ResultSet rs = connection.prepareStatement(GET_TYPE_QUERY).executeQuery();
-        List<Type> types = new ArrayList<Type>();
+        List<Type> type = new ArrayList<Type>();
 
         while (rs.next()) {
-            types.add(populateMember(rs.getInt(1), rs.getString(2)));
+            type.add(populateMember(rs.getInt(1), rs.getString(2)));
         }
-        return types;
+        return type;
     }
 
     public static void createNewType(int typeId, String weapon_type) throws SQLException {
@@ -53,7 +53,7 @@ public class TypeDAO {
         ps.executeUpdate();
     }
 
-    public Type getTypeByTypeId(int typeId) throws SQLException {
+    public static Type getTypeByTypeId(int typeId) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(GET_TYPE_BY_TYPE_ID_QUERY);
         ps.setInt(1,  typeId);
         ResultSet rs = ps.executeQuery();
@@ -74,7 +74,7 @@ public class TypeDAO {
         ps.executeUpdate();
     }
 
-    private Type populateMember(int typeId, String weaponType) throws SQLException {
+    private static Type populateMember(int typeId, String weaponType) throws SQLException {
         return new Type(typeId, weaponType);
     }
 }

@@ -20,7 +20,7 @@ public class Menu {
 
     private Scanner scanner = new Scanner(System.in);
     private List<String> options = Arrays.asList(
-            "Add a Gun",
+            "Add Guns",
             "Add Types",
             "Add Calibers",
             "Add Attachments",
@@ -32,10 +32,10 @@ public class Menu {
             "Remove a Type",
             "Remove a Caliber",
             "Remove an Attachment",
-            "Display Guns",
-            "Display Types",
-            "Display Calibers",
-            "Display Attachments"
+            "Display a Gun",
+            "Display a Type",
+            "Display a Caliber",
+            "Display an Attachment"
     );
 
     public void start() {
@@ -50,37 +50,37 @@ public class Menu {
 
             try {
                 if (selection.equals("1")) {
-                    addGun();
+                    addGuns();
                 } else if (selection.equals("2")) {
-                    addType();
+                    addTypes();
                 } else if (selection.equals("3")) {
-                    addCaliber();
+                    addCalibers();
                 } else if (selection.equals("4")) {
-                    addAttachment();
+                    addAttachments();
                 } else if (selection.equals("5")) {
-                    updateGun();
+                    updateGuns();
                 } else if (selection.equals("6")) {
-                    updateType();
+                    updateTypes();
                 } else if (selection.equals("7")) {
-                    updateCaliber();
+                    updateCalibers();
                 } else if (selection.equals("8")) {
-                    updateAttachment();
+                    updateAttachments();
                 } else if (selection.equals("9")) {
-                    removeGun();
+                    removeGuns();
                 } else if (selection.equals("10")) {
-                    removeType();
+                    removeTypes();
                 }  else if (selection.equals("11")) {
-                    removeCaliber();
+                    removeCalibers();
                 }  else if (selection.contentEquals("12")) {
-                    removeAttachment();
+                    removeAttachments();
                 } else if (selection.equals("13")) {
-                    displayGun();
+                    displayGuns();
                 }  else if (selection.equals("14")) {
-                    displayType();
+                    displayTypes();
                 } else if (selection.equals("15")) {
-                    displayCaliber();
+                    displayCalibers();
                 }  else if (selection.contentEquals("16")) {
-                    displayAttachment();
+                    displayAttachments();
                 }
 
             } catch (SQLException e) {
@@ -98,6 +98,118 @@ public class Menu {
         for (int i = 0; i < options.size(); i++) {
             System.out.println(i + 1 + ")" + options.get(i));
         }
+    }
+
+    private void addGuns() throws SQLException {
+        System.out.print("Add Gun ID:");
+        int gunId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Add Gun Name:");
+        String gun = scanner.nextLine();
+        WeaponDAO.addNewWeapon(gunId, gun);
+    }
+
+    private void addTypes() throws SQLException {
+        System.out.print("Add Type ID:");
+        int typeId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Add Weapon Type:");
+        String weapon_type = scanner.nextLine();
+        TypeDAO.createNewType(typeId, weapon_type);
+    }
+
+    private void addCalibers() throws SQLException {
+        System.out.print("Add Caliber ID:");
+        int caliberId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Add Caliber Type:");
+        int caliberType = Integer.parseInt(scanner.nextLine());
+        CaliberDAO.addNewCaliber(caliberId, caliberType);
+    }
+
+    private void addAttachments() throws SQLException {
+        System.out.print("Add Attachment ID:");
+        int attachmentId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Add Attachment Type:");
+        String attachmentType = scanner.nextLine();
+        AttachmentDAO.addNewAttachment(attachmentId, attachmentType);
+    }
+
+    private void updateGuns() throws SQLException {
+        System.out.print("Update Gun ID:");
+        int gunId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Update Gun:");
+        String gun = scanner.nextLine();
+        WeaponDAO.updateWeapon(gunId, gun);
+    }
+
+    private void updateTypes() throws SQLException {
+        System.out.print("Update Type ID:");
+        int typeId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Update Weapon Type:");
+        String weaponType = scanner.nextLine();
+        TypeDAO.updateType(typeId, weaponType);
+    }
+
+    private void updateCalibers() throws SQLException {
+        System.out.print("Update Caliber ID:");
+        int caliberId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Update Caliber Type:");
+        int caliberType = Integer.parseInt(scanner.nextLine());
+        CaliberDAO.updateCaliber(caliberId, caliberType);
+    }
+
+    private void updateAttachments() throws SQLException {
+        System.out.print("Update Attachment ID:");
+        int attachmentId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Update Attachment Type:");
+        String attachmentType = scanner.nextLine();
+        AttachmentDAO.updateAttachment(attachmentId, attachmentType);
+    }
+
+    private void removeGuns() throws SQLException {
+        System.out.print("Delete By Gun ID:");
+        int gunId = Integer.parseInt(scanner.nextLine());
+        WeaponDAO.deleteWeaponById(gunId);
+    }
+
+    private void removeTypes() throws SQLException {
+        System.out.print("Delete Type By ID:");
+        int typeId = Integer.parseInt(scanner.nextLine());
+        TypeDAO.deleteTypeById(typeId);
+    }
+
+    private void removeCalibers() throws SQLException {
+        System.out.print("Delete By Caliber ID:");
+        int caliberId = Integer.parseInt(scanner.nextLine());
+        CaliberDAO.deleteCaliberById(caliberId);
+    }
+
+    private void removeAttachments() throws SQLException {
+        System.out.print("Remove Attachment by ID:");
+        int attachmentId = Integer.parseInt(scanner.nextLine());
+        AttachmentDAO.deleteAttachmentById(attachmentId);
+    }
+
+    private void displayGuns() throws SQLException {
+        System.out.print("Display Gun by ID:");
+        int gunId = Integer.parseInt(scanner.nextLine());
+        WeaponDAO.WeaponByID(gunId);
+    }
+
+    private void displayTypes() throws SQLException {
+        System.out.print("Display Type by ID:");
+        int typeId = Integer.parseInt(scanner.nextLine());
+        TypeDAO.getTypeByTypeId(typeId);
+    }
+
+    private void displayCalibers() throws SQLException {
+        System.out.print("Display Caliber by ID:");
+        int caliberId = Integer.parseInt(scanner.nextLine());
+        CaliberDAO.CaliberByID(caliberId);
+    }
+
+    private void displayAttachments() throws SQLException {
+        System.out.print("Display Attachment by ID:");
+        int attachmentId = Integer.parseInt(scanner.nextLine());
+        AttachmentDAO.AttachmentByID(attachmentId);
     }
 
 }

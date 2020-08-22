@@ -5,7 +5,7 @@ public class Caliber {
     private int caliberId;
     private int caliberType;
 
-    public Caliber (int caliberId, int caliberType) {
+    public Caliber(int caliberId) {
         this.caliberId = caliberId;
         this.caliberType = caliberType;
     }

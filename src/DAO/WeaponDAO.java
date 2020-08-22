@@ -13,7 +13,7 @@ public class WeaponDAO {
 
     private static Connection connection;
     private final String GET_WEAPON_QUERY = "SELECT * FROM weapon";
-    private final String GET_WEAPON_BY_ID_QUERY = "SELECT * FROM weapon WHERE gunId = ?";
+    private static final String GET_WEAPON_BY_ID_QUERY = "SELECT * FROM weapon WHERE gunId = ?";
     private final static String UPDATE_WEAPON_BY_ID_QUERY = "UPDATE type SET gunId = ?, gun = ?";
     private final static String ADD_NEW_WEAPON_QUERY = "INSERT INTO weapon(gunId, gun) VALUES (?,?)";
     private final static String DELETE_WEAPON_BY_WEAPON_ID_QUERY = "DELETE FROM weapon WHERE gunId = ?";
@@ -32,7 +32,7 @@ public class WeaponDAO {
         return weapon;
     }
 
-    public List<Weapon> WeaponByID(int gunId) throws SQLException {
+    public static List<Weapon> WeaponByID(int gunId) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(GET_WEAPON_BY_ID_QUERY);
         ps.setInt(1, gunId);
         ResultSet rs = ps.executeQuery();
@@ -51,7 +51,7 @@ public class WeaponDAO {
         ps.executeUpdate();
     }
 
-    private Weapon populateSchedule(int gunId, String gun) {
+    private static Weapon populateSchedule(int gunId, String gun) {
         return new Weapon(gunId, gun);
     }
 

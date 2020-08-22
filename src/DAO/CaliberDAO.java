@@ -13,7 +13,7 @@ public class CaliberDAO {
 
     private static Connection connection;
     private final String GET_CALIBER_QUERY = "SELECT * FROM caliber";
-    private final String GET_CALIBER_BY_ID_QUERY = "SELECT * FROM caliber WHERE caliber_ID = ?";
+    private static final String GET_CALIBER_BY_ID_QUERY = "SELECT * FROM caliber WHERE caliber_ID = ?";
     private final String GET_CALIBER_BY_GUN_ID_QUERY = "Select * FROM caliber WHERE gunId = ?";
     private final static String UPDATE_TYPE_BY_ID_QUERY = "UPDATE type SET caliberId = ?, caliberType = ?";
     private final static String ADD_NEW_CALIBER_QUERY = "INSERT INTO caliber(caliberId, caliberType) VALUES (?,?)";
@@ -28,19 +28,19 @@ public class CaliberDAO {
         List<Caliber> caliber = new ArrayList<Caliber>();
 
         while (rs.next()) {
-            caliber.add(populateSchedule(rs.getInt(1),rs.getInt(2)));
+            caliber.add(populateSchedule(rs.getInt(1)));
         }
         return caliber;
     }
 
-    public List<Caliber> CaliberByID(int caliberId) throws SQLException {
+    public static List<Caliber> CaliberByID(int caliberId) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(GET_CALIBER_BY_ID_QUERY);
         ps.setInt(1, caliberId);
         ResultSet rs = ps.executeQuery();
         List<Caliber> caliber = new ArrayList<Caliber>();
 
         while (rs.next()) {
-            caliber.add(populateSchedule(rs.getInt(1), rs.getInt(2)));
+            caliber.add(populateSchedule(rs.getInt(1)));
         }
         return caliber;
     }
@@ -52,7 +52,7 @@ public class CaliberDAO {
         List<Caliber> caliber = new ArrayList<Caliber>();
 
         while (rs.next()) {
-            caliber.add(populateSchedule(rs.getInt(1), rs.getInt(2)));
+            caliber.add(populateSchedule(rs.getInt(1)));
         }
         return caliber;
     }
@@ -64,8 +64,8 @@ public class CaliberDAO {
         ps.executeUpdate();
     }
 
-    private Caliber populateSchedule(int caliberId, int caliberType) {
-        return new Caliber(caliberId, caliberType);
+    private static Caliber populateSchedule(int caliberId) {
+        return new Caliber(caliberId);
     }
 
     public static void addNewCaliber(int caliberId, int caliberType) throws SQLException {

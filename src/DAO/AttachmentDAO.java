@@ -1,3 +1,4 @@
+
 package DAO;
 
 import Entity.Attachment;
@@ -13,11 +14,11 @@ public class AttachmentDAO {
 
     private static Connection connection;
     private final String GET_ATTACHMENT_QUERY = "SELECT * FROM attachment";
-    private final String GET_ATTACHMENT_BY_ID_QUERY = "SELECT * FROM attachment WHERE attachmentId = ?";
+    private static final String GET_ATTACHMENT_BY_ID_QUERY = "SELECT * FROM attachment WHERE attachmentId = ?";
     private final String GET_ATTACHMENT_BY_GUN_ID_QUERY = "Select * FROM attachment WHERE gunId = ?";
     private final static String UPDATE_ATTACHMENT_BY_ID_QUERY = "UPDATE type SET attachmentId = ?, attachmentType = ?";
     private final static String ADD_NEW_ATTACHMENT_QUERY = "INSERT INTO attachment(attachmentId, attachmentType) VALUES (?,?)";
-    private final String DELETE_ATTACHMENT_BY_ATTACHMENT_ID_QUERY = "DELETE FROM attachment WHERE attachmentId = ?";
+    private static final String DELETE_ATTACHMENT_BY_ATTACHMENT_ID_QUERY = "DELETE FROM attachment WHERE attachmentId = ?";
 
     public AttachmentDAO() {
         connection = DBConnection.getConnection();
@@ -25,15 +26,15 @@ public class AttachmentDAO {
 
     public List<Attachment> Attachment() throws SQLException {
         ResultSet rs = connection.prepareStatement(GET_ATTACHMENT_QUERY).executeQuery();
-        List<Attachment> attachment = new ArrayList<Attachment>();
+        List<Attachment> Attachment = new ArrayList<Attachment>();
 
         while (rs.next()) {
-            attachment.add(populateSchedule(rs.getInt(1),rs.getString(2)));
+            Attachment.add(populateSchedule(rs.getInt(1),rs.getString(2)));
         }
-        return attachment;
+        return Attachment;
     }
 
-    public List<Attachment> AttachmentByID(int attachmentId) throws SQLException {
+    public static List<Attachment> AttachmentByID(int attachmentId) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(GET_ATTACHMENT_BY_ID_QUERY);
         ps.setInt(1, attachmentId);
         ResultSet rs = ps.executeQuery();
@@ -64,7 +65,7 @@ public class AttachmentDAO {
         ps.executeUpdate();
     }
 
-    private Attachment populateSchedule(int attachmentId, String attachmentType) {
+    private static Attachment populateSchedule(int attachmentId, String attachmentType) {
         return new Attachment(attachmentId, attachmentType);
     }
 
@@ -75,7 +76,7 @@ public class AttachmentDAO {
         ps.executeUpdate();
     }
 
-    public void deleteCaliberById(int attachmentId) throws SQLException {
+    public static void deleteAttachmentById(int attachmentId) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(DELETE_ATTACHMENT_BY_ATTACHMENT_ID_QUERY);
         ps.setInt(1, attachmentId);
         ps.executeUpdate();
