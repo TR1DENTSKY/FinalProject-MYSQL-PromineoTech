@@ -36,14 +36,14 @@ public class TypeDAO {
         return type;
     }
 
-    public List<Type> getAllType() throws SQLException {
+    public List<Type> Types() throws SQLException {
         ResultSet rs = connection.prepareStatement(GET_TYPE_QUERY).executeQuery();
-        List<Type> type = new ArrayList<Type>();
+        List<Type> types = new ArrayList<Type>();
 
         while (rs.next()) {
-            type.add(populateMember(rs.getInt(1), rs.getString(2)));
+            types.add(populateMember(rs.getInt(1), rs.getString(2)));
         }
-        return type;
+        return types;
     }
 
     public void createNewType(int typeId, String weapon_type) throws SQLException {
