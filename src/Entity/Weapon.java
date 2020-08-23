@@ -7,14 +7,12 @@ public class Weapon {
 
     private int gunId;
     private String gun;
-    private List<Type> type;
     private List<Caliber> caliber;
     private List<Attachment> attachment;
 
     public Weapon(int gunId, String gun) {
         this.gunId = gunId;
         this.gun = gun;
-        this.setType(type);
         this.setCaliber(caliber);
         this.setAttachment(attachment);
     }
@@ -35,13 +33,6 @@ public class Weapon {
         this.gun = gun;
     }
 
-    public List<Type> getType() {
-        return type;
-    }
-
-    public void setType(List<Type> type) {
-        this.type = type;
-    }
 
     public List<Caliber> getCaliber() {
         return caliber;

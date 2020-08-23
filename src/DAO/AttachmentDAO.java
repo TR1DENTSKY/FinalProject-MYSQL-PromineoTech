@@ -13,10 +13,8 @@ import java.util.List;
 public class AttachmentDAO {
 
     private static Connection connection;
-    private final String GET_ATTACHMENT_QUERY = "SELECT * FROM attachment";
-    private static final String GET_ATTACHMENT_BY_ID_QUERY = "SELECT * FROM attachment WHERE attachmentId = ?";
-    private final String GET_ATTACHMENT_BY_GUN_ID_QUERY = "Select * FROM attachment WHERE gunId = ?";
-    private final static String UPDATE_ATTACHMENT_BY_ID_QUERY = "UPDATE type SET attachmentId = ?, attachmentType = ?";
+    private static final String GET_ATTACHMENT_QUERY = "SELECT * FROM attachment";
+    private final static String UPDATE_ATTACHMENT_QUERY = "UPDATE attachment SET attachmentId = ?, attachmentType = ?";
     private final static String ADD_NEW_ATTACHMENT_QUERY = "INSERT INTO attachment(attachmentId, attachmentType) VALUES (?,?)";
     private static final String DELETE_ATTACHMENT_BY_ATTACHMENT_ID_QUERY = "DELETE FROM attachment WHERE attachmentId = ?";
 
@@ -24,7 +22,7 @@ public class AttachmentDAO {
         connection = DBConnection.getConnection();
     }
 
-    public List<Attachment> Attachment() throws SQLException {
+    public static List<Attachment> Attachment() throws SQLException {
         ResultSet rs = connection.prepareStatement(GET_ATTACHMENT_QUERY).executeQuery();
         List<Attachment> Attachment = new ArrayList<Attachment>();
 
@@ -34,32 +32,8 @@ public class AttachmentDAO {
         return Attachment;
     }
 
-    public static List<Attachment> AttachmentByID(int attachmentId) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(GET_ATTACHMENT_BY_ID_QUERY);
-        ps.setInt(1, attachmentId);
-        ResultSet rs = ps.executeQuery();
-        List<Attachment> attachment = new ArrayList<Attachment>();
-
-        while (rs.next()) {
-            attachment.add(populateSchedule(rs.getInt(1),rs.getString(2)));
-        }
-        return attachment;
-    }
-
-    public List<Attachment> AttachmentByByGunID(int gunId) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(GET_ATTACHMENT_BY_GUN_ID_QUERY);
-        ps.setInt(1, gunId);
-        ResultSet rs = ps.executeQuery();
-        List<Attachment> attachment = new ArrayList<Attachment>();
-
-        while (rs.next()) {
-            attachment.add(populateSchedule(rs.getInt(1),rs.getString(2)));
-        }
-        return attachment;
-    }
-
     public static void updateAttachment(int attachmentId, String attachmentType) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(UPDATE_ATTACHMENT_BY_ID_QUERY);
+        PreparedStatement ps = connection.prepareStatement(UPDATE_ATTACHMENT_QUERY);
         ps.setInt(1, attachmentId);
         ps.setString(2,attachmentType);
         ps.executeUpdate();

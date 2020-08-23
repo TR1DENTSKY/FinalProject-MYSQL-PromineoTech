@@ -12,9 +12,8 @@ import java.util.List;
 public class WeaponDAO {
 
     private static Connection connection;
-    private final String GET_WEAPON_QUERY = "SELECT * FROM weapon";
-    private static final String GET_WEAPON_BY_ID_QUERY = "SELECT * FROM weapon WHERE gunId = ?";
-    private final static String UPDATE_WEAPON_BY_ID_QUERY = "UPDATE type SET gunId = ?, gun = ?";
+    private static final String GET_WEAPON_QUERY = "SELECT * FROM weapon";
+    private final static String UPDATE_WEAPON_QUERY = "UPDATE weapon SET gunId = ?, gun = ?";
     private final static String ADD_NEW_WEAPON_QUERY = "INSERT INTO weapon(gunId, gun) VALUES (?,?)";
     private final static String DELETE_WEAPON_BY_WEAPON_ID_QUERY = "DELETE FROM weapon WHERE gunId = ?";
 
@@ -22,7 +21,7 @@ public class WeaponDAO {
         connection = DBConnection.getConnection();
     }
 
-    public List<Weapon> Weapon() throws SQLException {
+    public static List<Weapon> Weapon() throws SQLException {
         ResultSet rs = connection.prepareStatement(GET_WEAPON_QUERY).executeQuery();
         List<Weapon> weapon = new ArrayList<Weapon>();
 
@@ -32,20 +31,8 @@ public class WeaponDAO {
         return weapon;
     }
 
-    public static List<Weapon> WeaponByID(int gunId) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(GET_WEAPON_BY_ID_QUERY);
-        ps.setInt(1, gunId);
-        ResultSet rs = ps.executeQuery();
-        List<Weapon> weapon = new ArrayList<Weapon>();
-
-        while (rs.next()) {
-            weapon.add(populateSchedule(rs.getInt(1),rs.getString(2)));
-        }
-        return weapon;
-    }
-
     public static void updateWeapon(int gunId, String gun) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(UPDATE_WEAPON_BY_ID_QUERY);
+        PreparedStatement ps = connection.prepareStatement(UPDATE_WEAPON_QUERY);
         ps.setInt(1, gunId);
         ps.setString(2,gun);
         ps.executeUpdate();
